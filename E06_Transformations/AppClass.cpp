@@ -1,7 +1,7 @@
 #include "AppClass.h"
 void AppClass::InitWindow(String a_sWindowName)
 {
-	super::InitWindow("Bobadilla, Alberto - 3D Transformations");
+	super::InitWindow("E06 - 3D Transformations");
 	m_v4ClearColor = vector4(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
@@ -19,6 +19,8 @@ void AppClass::InitVariables(void)
 
 	//Initializing the primitives
 	m_pSphere->GenerateSphere(0.5f, 5, REWHITE);
+
+	m_pCube->GenerateCube(1.0, RERED);
 }
 
 void AppClass::Update(void)
@@ -29,9 +31,14 @@ void AppClass::Update(void)
 	//This matrices will scale them to the right size
 	m_m4Sphere = glm::scale(m_m4Sphere, vector3(2.0f, 2.0f, 2.0f));
 
+	m_m4Cube = glm::translate(IDENTITY_M4, vector3(1, 0, 0));
+
+	m_m4Cube = glm::scale(m_m4Cube, vector3(1.0f, 1.0f, 1.0f));
+
 	//Indicate the FPS
 	int nFPS = m_pSystem->GetFPS();
 	//Print info on the screen
+	m_pMeshMngr->PrintLine("");
 	m_pMeshMngr->PrintLine(m_pSystem->GetAppName(), REYELLOW);
 	m_pMeshMngr->Print("FPS:");
 	m_pMeshMngr->Print(std::to_string(nFPS), RERED);
@@ -48,6 +55,8 @@ void AppClass::Display(void)
 
 	//Renders the meshes using the specified position given by the matrix and in the specified color
 	m_pSphere->Render(m4Projection, m4View, m_m4Sphere);
+
+	m_pCube->Render(m4Projection, m4View, m_m4Cube);
 	
 	//Render the grid based on the camera's mode:
 	m_pMeshMngr->AddGridToRenderListBasedOnCamera(m_pCameraMngr->GetCameraMode());
