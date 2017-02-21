@@ -21,19 +21,42 @@ void AppClass::InitVariables(void)
 	m_pSphere->GenerateSphere(0.5f, 5, REWHITE);
 
 	m_pCube->GenerateCube(1.0, RERED);
+
+	m_pCone->GenerateCone(0.5f, 0.5f, 10, REGREEN);
+
+	m_pCylinder->GenerateCylinder(0.5f, 0.5f, 10, REBLUE);
+
+	m_pTube->GenerateTube(0.5f, 0.25f, 0.5f, 10, REBROWN);
+
+	m_pTorus->GenerateTorus(0.5f, 0.25f, 10, 10, REYELLOW);
+
 }
 
 void AppClass::Update(void)
 {
+	// SPHERE
 	//This matrices will just place the objects int the right spots
 	m_m4Sphere = glm::translate(IDENTITY_M4, vector3(2.5f, 2.5f, 0.0f));
 
 	//This matrices will scale them to the right size
 	m_m4Sphere = glm::scale(m_m4Sphere, vector3(2.0f, 2.0f, 2.0f));
+	
+	// CUBE
+	m_m4Cube = glm::translate(IDENTITY_M4, vector3(2, 0, 0));
+	//m_m4Cube = glm::scale(m_m4Cube, vector3(1.0f, 1.0f, 1.0f));
 
-	m_m4Cube = glm::translate(IDENTITY_M4, vector3(1, 0, 0));
+	// CONE
+	m_m4Cone = glm::translate(IDENTITY_M4, vector3(0, 2, 0));
 
-	m_m4Cube = glm::scale(m_m4Cube, vector3(1.0f, 1.0f, 1.0f));
+	// CYLINDER
+	m_m4Cylinder= glm::translate(IDENTITY_M4, vector3(-2, 0, 0));
+
+	// TUBE
+	m_m4Tube = glm::translate(IDENTITY_M4, vector3(0, -2, 0));
+
+	// TORUS
+	m_m4Torus = glm::translate(IDENTITY_M4, vector3(0, 0, 0));
+	m_m4Torus = glm::scale(m_m4Torus, vector3(2, 2, 2));
 
 	//Indicate the FPS
 	int nFPS = m_pSystem->GetFPS();
@@ -57,6 +80,14 @@ void AppClass::Display(void)
 	m_pSphere->Render(m4Projection, m4View, m_m4Sphere);
 
 	m_pCube->Render(m4Projection, m4View, m_m4Cube);
+
+	m_pCone->Render(m4Projection, m4View, m_m4Cone);
+
+	m_pCylinder->Render(m4Projection, m4View, m_m4Cylinder);
+
+	m_pTube->Render(m4Projection, m4View, m_m4Tube);
+
+	m_pTorus->Render(m4Projection, m4View, m_m4Torus);
 	
 	//Render the grid based on the camera's mode:
 	m_pMeshMngr->AddGridToRenderListBasedOnCamera(m_pCameraMngr->GetCameraMode());
