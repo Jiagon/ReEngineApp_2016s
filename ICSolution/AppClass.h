@@ -1,25 +1,26 @@
 /*----------------------------------------------
 Programmer: Alberto Bobadilla (labigm@gmail.com)
-Date: 2015/09
+Date: 2015/09 (Last Modified on: 15/11)
 ----------------------------------------------*/
 #ifndef __APPLICATION_H_
 #define __APPLICATION_H_
 
 #include "RE\ReEngAppClass.h"
 #include <SFML\Graphics.hpp>
-#include "MyPrimitive.h"
 
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 
 class AppClass : public ReEngAppClass
 {
-	MyPrimitive* m_pPrimitive = nullptr;
-	matrix4 m_m4Transform = matrix4();
 public:
 	typedef ReEngAppClass super;
+
+	matrix4 m_m4Orientation;
+	vector3 m_v3Orientation;
+
 	/*
 	USAGE: Constructor
-	ARGUMENTS:
+	ARGUMENTS: 
 	- HINSTANCE hInstance -> Instance of the window
 	- LPWSTR lpCmdLine -> Command line
 	- int nCmdShow -> Number or arguments
@@ -90,5 +91,9 @@ public:
 	*/
 	virtual void Release(void) final;
 };
-
+/*
+USAGE:
+ARGUMENTS: ---
+OUTPUT: ---
+*/
 #endif //__APPLICATION_H_
