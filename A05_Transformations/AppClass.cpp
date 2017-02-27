@@ -50,10 +50,17 @@ void AppClass::Update(void)
 
 #pragma region YOUR CODE GOES HERE
 	//Calculate the position of the Earth
-	m_m4Earth = glm::rotate(IDENTITY_M4, m_fEarthTimer, vector3(0.0f, 1.0f, 0.0f));
+	m_m4Earth = glm::rotate(m_m4Sun, m_fEarthTimer, vector3(0.0f, 1.0f, 0.0f));				// rotates the Earth around the sun's position
+	m_m4Earth = glm::translate(m_m4Earth, vector3(11.0f, 0.0f, 0.0f));							// moves the Earth away from the center of the sun
+	m_m4Earth = glm::rotate(m_m4Earth, static_cast<float>(m_fEarthTimer * (28 * 2 * PI)), vector3(1.0f, 0.0f, 0.0f));			// rotates the Earth around its own origin
 
 	//Calculate the position of the Moon
-	m_m4Moon = glm::rotate(IDENTITY_M4, m_fMoonTimer, vector3(0.0f, 1.0f, 0.0f));
+	m_m4Moon = glm::rotate(m_m4Sun, m_fEarthTimer, vector3(0.0f, 1.0f, 0.0f));				// rotates the moon around the Earth's position
+	m_m4Moon = glm::translate(m_m4Moon, vector3(11.0f, 0.0f, 0.0f));							// moves the moon away from the center of the Earth
+	m_m4Moon = glm::rotate(m_m4Moon, m_fMoonTimer, vector3(0.0f, 1.0f, 0.0f));					// rotates the moon arond its own origin
+	m_m4Moon = glm::translate(m_m4Moon, vector3(2.0f, 0.0f, 0.0f));
+	m_m4Moon = glm::rotate(m_m4Moon, m_fMoonTimer * 20, vector3(0.0f, 1.0f, 0.0f));
+	m_m4Moon = glm::scale(m_m4Moon, vector3(2.0f, 2.0f, 2.0f));									// enlargens the moon (so I can actually see what I'm doing)
 #pragma endregion
 
 #pragma region Print info
