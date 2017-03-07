@@ -11,7 +11,8 @@ void AppClass::InitVariables(void)
 	// Color of the screen
 	m_v4ClearColor = vector4(REBLACK, 1); // Set the clear color to black
 
-	m_pMeshMngr->LoadModel("Sorted\\WallEye.bto", "WallEye");
+	m_pMeshMngr->LoadModel("Sorted\\WallEye.bto", "WallEye");			// Walleye model
+	//m_pMeshMngr->LoadModel("Minecraft\\Creeper.bto", "Creeper");		// Creeper model
 
 	fDuration = 1.0f;
 }
@@ -24,7 +25,7 @@ void AppClass::Update(void)
 
 	//Update the mesh manager's time without updating for collision detection
 	m_pMeshMngr->Update();
-#pragma region
+#pragma endregion
 
 #pragma region Does not need changes but feel free to change anything here
 	//Lets us know how much time has passed since the last call
@@ -32,11 +33,57 @@ void AppClass::Update(void)
 
 	//cumulative time
 	static double fRunTime = 0.0f; //How much time has passed since the program started
-	fRunTime += fTimeSpan; 
+	fRunTime += fTimeSpan;
 #pragma endregion
 
 #pragma region Your Code goes here
-	m_pMeshMngr->SetModelMatrix(IDENTITY_M4, "WallEye");
+
+	static DWORD timerSinceBoot = GetTickCount();				// timer since the computer started
+	DWORD timerSinceStart = GetTickCount() - timerSinceBoot;	// current time
+	float fTimer = timerSinceStart / 1000.0f;					// was in millis need it in secs
+
+	m_pMeshMngr->PrintLine("");									// print an empty line
+	m_pMeshMngr->PrintLine(std::to_string(fTimer));					// print the timer
+
+	//m_pMeshMngr->AddSphereToRenderList(IDENTITY_M4, RERED, WIRE | SOLID);			// WIRE, SOLID, WIRE | SOLID <- | = mesh of both together
+	matrix4 m4SpherePosition = glm::translate(vector3(1.0, 0.0, 0.0)) * glm::scale(vector3(0.1));
+	m_pMeshMngr->AddSphereToRenderList(m4SpherePosition, RERED, WIRE | SOLID);
+	matrix4 m4Sphere0 = glm::translate(vector3(-4.0f, -2.0f, 5.0f)) * glm::scale(vector3(0.1));
+	matrix4 m4Sphere1 = glm::translate(vector3(1.0f, -2.0f, 5.0f)) * glm::scale(vector3(0.1));
+	matrix4 m4Sphere2 = glm::translate(vector3(-3.0f, -1.0f, 3.0f)) * glm::scale(vector3(0.1));
+	matrix4 m4Sphere3 = glm::translate(vector3(2.0f, -1.0f, 3.0f)) * glm::scale(vector3(0.1));
+	matrix4 m4Sphere4 = glm::translate(vector3(-2.0f, 0.0f, 0.0f)) * glm::scale(vector3(0.1));
+	matrix4 m4Sphere5 = glm::translate(vector3(3.0f, 0.0f, 0.0f)) * glm::scale(vector3(0.1));
+	matrix4 m4Sphere6 = glm::translate(vector3(-1.0f, 1.0f, -3.0f)) * glm::scale(vector3(0.1));
+	matrix4 m4Sphere7 = glm::translate(vector3(4.0f, 1.0f, -3.0f)) * glm::scale(vector3(0.1));
+	matrix4 m4Sphere8 = glm::translate(vector3(0.0f, 2.0f, -5.0f)) * glm::scale(vector3(0.1));
+	matrix4 m4Sphere9 = glm::translate(vector3(5.0f, 2.0f, -5.0f)) * glm::scale(vector3(0.1));
+	matrix4 m4Sphere10 = glm::translate(vector3(1.0f, 3.0f, -5.0f)) * glm::scale(vector3(0.1));
+
+	m_pMeshMngr->AddSphereToRenderList(m4Sphere0, RERED, SOLID);
+	m_pMeshMngr->AddSphereToRenderList(m4Sphere1, RERED, SOLID);
+	m_pMeshMngr->AddSphereToRenderList(m4Sphere2, RERED, SOLID);
+	m_pMeshMngr->AddSphereToRenderList(m4Sphere3, RERED, SOLID);
+	m_pMeshMngr->AddSphereToRenderList(m4Sphere4, RERED, SOLID);
+	m_pMeshMngr->AddSphereToRenderList(m4Sphere5, RERED, SOLID);
+	m_pMeshMngr->AddSphereToRenderList(m4Sphere6, RERED, SOLID);
+	m_pMeshMngr->AddSphereToRenderList(m4Sphere7, RERED, SOLID);
+	m_pMeshMngr->AddSphereToRenderList(m4Sphere8, RERED, SOLID);
+	m_pMeshMngr->AddSphereToRenderList(m4Sphere9, RERED, SOLID);
+	m_pMeshMngr->AddSphereToRenderList(m4Sphere10, RERED, SOLID);
+
+
+	vector3 v3Start = vector3(-5, 0, 0);
+	vector3 v3End = vector3(5, 0, 0);
+	float percentage = MapValue(fTimer, 0.0f, 5.0f, 0.0f, 1.0f);
+	if (percentage > 1.0f) {
+		percentage = 1.0f;
+	}
+	vector3 v3Current = glm::lerp(v3Start, v3End, percentage);
+	m_pMeshMngr->PrintLine("Percentage: " + std::to_string(percentage), REGREEN);	// print out the percentage
+
+	matrix4 m4Creeper = glm::translate(v3Current);
+	m_pMeshMngr->SetModelMatrix(m4Creeper, "WallEye");
 #pragma endregion
 
 #pragma region Does not need changes but feel free to change anything here
@@ -51,6 +98,7 @@ void AppClass::Update(void)
 	m_pMeshMngr->PrintLine(m_pSystem->GetAppName(), REYELLOW);
 	m_pMeshMngr->Print("FPS:");
 	m_pMeshMngr->Print(std::to_string(nFPS), RERED);
+
 #pragma endregion
 }
 
