@@ -8,15 +8,39 @@ void AppClass::InitVariables(void)
 {
 	//Reserve Memory for a MyMeshClass object
 	m_pPrimitive = new MyPrimitive();
-	m_pPrimitive->GenerateCube(1.0f, REWHITE);
-	m_pPrimitive->GenerateCone(1.0f, 1.0f, 12, REGREEN);
-	m_pPrimitive->GenerateCylinder(1.0f, 2.0f, 7, REBLUE);
-	m_pPrimitive->GenerateTube(1.0f, 0.7f, 2.0f, 7, REYELLOW);
-	m_pPrimitive->GenerateSphere(1.0f, 3, RERED);
+	//m_pPrimitive->GenerateCube(1.0f, REWHITE);
+	//m_pPrimitive->GenerateCone(1.0f, 1.0f, 12, REGREEN);
+	//m_pPrimitive->GenerateCylinder(1.0f, 2.0f, 7, REBLUE);
+	//m_pPrimitive->GenerateTube(1.0f, 0.7f, 2.0f, 7, REYELLOW);
+	//m_pPrimitive->GenerateSphere(1.0f, 10, RERED);
+	m_pPrimitive->GenerateTorus(2.0f, 1.0f, 10, 10, RECYAN);
 }
 
 void AppClass::Update(void)
 {
+	static float fTime = 0.0f;
+	static bool toRight = true;;
+	vector3 v3Start = vector3(-5.0f, 0.0f, 0.0f);
+	vector3 v3End = vector3(5.0f, 0.0f, 0.0f);
+	vector3 v3Current = glm::lerp(v3Start, v3End, fTime);
+
+	m_m4Transform = glm::translate(v3Current);
+
+
+	if (fTime > 1.0f) {
+		toRight = false;
+	}
+	else if (fTime < 0.0f) {
+		toRight = true;
+	}
+
+	if (toRight) {
+		fTime += 0.01f;
+	}
+	else {
+		fTime -= 0.01f;
+	}
+
 	//Update the system's time
 	m_pSystem->UpdateTime();
 
@@ -48,7 +72,9 @@ void AppClass::Display(void)
 	//clear the screen
 	ClearScreen();
 
-	m_pPrimitive->Render(m_pCameraMngr->GetProjectionMatrix(), m_pCameraMngr->GetViewMatrix(), ToMatrix4(m_qArcBall));
+	//m_pPrimitive->Render(m_pCameraMngr->GetProjectionMatrix(), m_pCameraMngr->GetViewMatrix(), ToMatrix4(m_qArcBall));
+
+	m_pPrimitive->Render(m_pCameraMngr->GetProjectionMatrix(), m_pCameraMngr->GetViewMatrix(), m_m4Transform);
 	
 	//Render the grid based on the camera's mode:
 	m_pMeshMngr->AddGridToRenderListBasedOnCamera(m_pCameraMngr->GetCameraMode());
