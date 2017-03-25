@@ -43,6 +43,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "E06_Transformations", "E06_
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "E05_Repository", "E05_Repository\E05_Repository.vcxproj", "{5FAE4181-EF87-444C-9E97-C3661796971F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "E07_Lerp", "E07_Lerp\E07_Lerp.vcxproj", "{9C214B2D-26EC-42AE-A119-AED178F2FD7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -101,6 +103,10 @@ Global
 		{5FAE4181-EF87-444C-9E97-C3661796971F}.Debug|x86.Build.0 = Debug|Win32
 		{5FAE4181-EF87-444C-9E97-C3661796971F}.Release|x86.ActiveCfg = Release|Win32
 		{5FAE4181-EF87-444C-9E97-C3661796971F}.Release|x86.Build.0 = Release|Win32
+		{9C214B2D-26EC-42AE-A119-AED178F2FD7F}.Debug|x86.ActiveCfg = Debug|Win32
+		{9C214B2D-26EC-42AE-A119-AED178F2FD7F}.Debug|x86.Build.0 = Debug|Win32
+		{9C214B2D-26EC-42AE-A119-AED178F2FD7F}.Release|x86.ActiveCfg = Release|Win32
+		{9C214B2D-26EC-42AE-A119-AED178F2FD7F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
