@@ -12,7 +12,10 @@ using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 
 class AppClass : public ReEngAppClass
 {
-	float fDuration = 1.0f; //Time Duration of the stops
+	float fDuration = 1.0f;					//Time Duration of the stops
+	const static int numSpheres = 11;		// Number of spheres in sphere array; CHANGE NUMBER HERE
+	vector3 v3Spheres[numSpheres];			// Array that holds the positions of all spheres the model lerps to
+	int currentSphere = 0;					// Current sphere the model lerps to (lerps from the previous one)
 public:
 	typedef ReEngAppClass super;
 	/*

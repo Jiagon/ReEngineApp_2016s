@@ -15,6 +15,8 @@ void AppClass::InitVariables(void)
 	//m_pMeshMngr->LoadModel("Minecraft\\Creeper.bto", "Creeper");		// Creeper model
 
 	fDuration = 1.0f;
+
+	currentSphere = 0;
 }
 
 void AppClass::Update(void)
@@ -43,47 +45,50 @@ void AppClass::Update(void)
 	float fTimer = timerSinceStart / 1000.0f;					// was in millis need it in secs
 
 	m_pMeshMngr->PrintLine("");									// print an empty line
-	m_pMeshMngr->PrintLine(std::to_string(fTimer));					// print the timer
+	m_pMeshMngr->PrintLine(std::to_string(fTimer));				// print the timer
 
-	//m_pMeshMngr->AddSphereToRenderList(IDENTITY_M4, RERED, WIRE | SOLID);			// WIRE, SOLID, WIRE | SOLID <- | = mesh of both together
-	matrix4 m4SpherePosition = glm::translate(vector3(1.0, 0.0, 0.0)) * glm::scale(vector3(0.1));
-	m_pMeshMngr->AddSphereToRenderList(m4SpherePosition, RERED, WIRE | SOLID);
-	matrix4 m4Sphere0 = glm::translate(vector3(-4.0f, -2.0f, 5.0f)) * glm::scale(vector3(0.1));
-	matrix4 m4Sphere1 = glm::translate(vector3(1.0f, -2.0f, 5.0f)) * glm::scale(vector3(0.1));
-	matrix4 m4Sphere2 = glm::translate(vector3(-3.0f, -1.0f, 3.0f)) * glm::scale(vector3(0.1));
-	matrix4 m4Sphere3 = glm::translate(vector3(2.0f, -1.0f, 3.0f)) * glm::scale(vector3(0.1));
-	matrix4 m4Sphere4 = glm::translate(vector3(-2.0f, 0.0f, 0.0f)) * glm::scale(vector3(0.1));
-	matrix4 m4Sphere5 = glm::translate(vector3(3.0f, 0.0f, 0.0f)) * glm::scale(vector3(0.1));
-	matrix4 m4Sphere6 = glm::translate(vector3(-1.0f, 1.0f, -3.0f)) * glm::scale(vector3(0.1));
-	matrix4 m4Sphere7 = glm::translate(vector3(4.0f, 1.0f, -3.0f)) * glm::scale(vector3(0.1));
-	matrix4 m4Sphere8 = glm::translate(vector3(0.0f, 2.0f, -5.0f)) * glm::scale(vector3(0.1));
-	matrix4 m4Sphere9 = glm::translate(vector3(5.0f, 2.0f, -5.0f)) * glm::scale(vector3(0.1));
-	matrix4 m4Sphere10 = glm::translate(vector3(1.0f, 3.0f, -5.0f)) * glm::scale(vector3(0.1));
+	// CREATING LOCATIONS TO ALL SPHERES AND ADDING THEM TO RENDER LIST
+	v3Spheres[0] = vector3(-4.0f, -2.0f, 5.0f);
+	v3Spheres[1] = vector3(1.0f, -2.0f, 5.0f);
+	v3Spheres[2] = vector3(-3.0f, -1.0f, 3.0f);
+	v3Spheres[3] = vector3(2.0f, -1.0f, 3.0f);
+	v3Spheres[4] = vector3(-2.0f, 0.0f, 0.0f);
+	v3Spheres[5] = vector3(3.0f, 0.0f, 0.0f);
+	v3Spheres[6] = vector3(-1.0f, 1.0f, -3.0f);
+	v3Spheres[7] = vector3(4.0f, 1.0f, -3.0f);
+	v3Spheres[8] = vector3(0.0f, 2.0f, -5.0f);
+	v3Spheres[9] = vector3(5.0f, 2.0f, -5.0f);
+	v3Spheres[10] = vector3(1.0f, 3.0f, -5.0f);
 
-	m_pMeshMngr->AddSphereToRenderList(m4Sphere0, RERED, SOLID);
-	m_pMeshMngr->AddSphereToRenderList(m4Sphere1, RERED, SOLID);
-	m_pMeshMngr->AddSphereToRenderList(m4Sphere2, RERED, SOLID);
-	m_pMeshMngr->AddSphereToRenderList(m4Sphere3, RERED, SOLID);
-	m_pMeshMngr->AddSphereToRenderList(m4Sphere4, RERED, SOLID);
-	m_pMeshMngr->AddSphereToRenderList(m4Sphere5, RERED, SOLID);
-	m_pMeshMngr->AddSphereToRenderList(m4Sphere6, RERED, SOLID);
-	m_pMeshMngr->AddSphereToRenderList(m4Sphere7, RERED, SOLID);
-	m_pMeshMngr->AddSphereToRenderList(m4Sphere8, RERED, SOLID);
-	m_pMeshMngr->AddSphereToRenderList(m4Sphere9, RERED, SOLID);
-	m_pMeshMngr->AddSphereToRenderList(m4Sphere10, RERED, SOLID);
-
-
-	vector3 v3Start = vector3(-5, 0, 0);
-	vector3 v3End = vector3(5, 0, 0);
-	float percentage = MapValue(fTimer, 0.0f, 5.0f, 0.0f, 1.0f);
-	if (percentage > 1.0f) {
-		percentage = 1.0f;
+	// Adds every sphere to the mesh renderer
+	for (int i = 0; i < numSpheres; i++) {
+		m_pMeshMngr->AddSphereToRenderList(glm::translate(v3Spheres[i]) * glm::scale(vector3(0.1)), RERED, SOLID);
 	}
+
+	// Change the start / end spheres to the mod of the currentSphere
+		//(you don't mod the current sphere because it's necessary for the percentage!)
+	vector3 v3Start = v3Spheres[currentSphere % numSpheres];
+	vector3 v3End = v3Spheres[(currentSphere + 1) % numSpheres];
+
+	// Percentage = Map of fTimer (0, 2) to float (0, 1)
+	float percentage = MapValue(fTimer, 0.0f, 2.0f, 0.0f, 1.0f);
+
+	// Subtract the currentSphere to keep values between 0 and 1
+	percentage -= currentSphere;
+
+	// Lerp between the start and end vectors for percentage
 	vector3 v3Current = glm::lerp(v3Start, v3End, percentage);
 	m_pMeshMngr->PrintLine("Percentage: " + std::to_string(percentage), REGREEN);	// print out the percentage
 
-	matrix4 m4Creeper = glm::translate(v3Current);
-	m_pMeshMngr->SetModelMatrix(m4Creeper, "WallEye");
+	// Create the mat4 for WallEye and set the model to that mat's position
+	matrix4 m4WallEye = glm::translate(v3Current);
+	m_pMeshMngr->SetModelMatrix(m4WallEye, "WallEye");
+
+	// If the percentage reaches above 1.0f, increment the currentSphere, thereby resetting everything
+	if (percentage >= 1.0f) {
+		currentSphere++;
+	}
+
 #pragma endregion
 
 #pragma region Does not need changes but feel free to change anything here
