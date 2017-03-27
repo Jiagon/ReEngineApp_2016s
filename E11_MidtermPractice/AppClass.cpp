@@ -15,7 +15,37 @@ void AppClass::Update(void)
 	dTotalTime += dDeltaTime; //Incrementing the time differences 
 #pragma endregion
 #pragma region YOUR CODE GOES HERE
-	m_m4Steve = glm::mat4(1.0f); // same as m_m4Steve = IDENTITY_M4; setting the identity to steve
+	m_m4Steve = glm::rotate(IDENTITY_M4, m_fSteve, vector3(0.0f, 0.0f, 1.0f));
+	m_fSteve += 1.2f;
+
+	float percentage = MapValue(static_cast<float>(dTotalTime / dDeltaTime), 0.0f, static_cast<float>(1.0f / dDeltaTime), 0.0f, 0.2f);
+	percentage -= rotations;
+
+	vector3 v3Start = vector3(0.0f, 0.0f, 0.0f);
+	vector3 v3End = vector3(0.0f, 0.0f, 0.0f);
+
+	if (forward) {
+		v3End = vector3(0.0f, 5.0f, 0.0f);
+		if (m_fSteve >= 360.0f) {
+			rotations++;
+			forward = false;
+		}
+	}
+	else {
+		v3Start = vector3(0.0f, 5.0f, 0.0f);
+		if (m_fSteve >= 360.0f) {
+			rotations++;
+			forward = true;
+		}
+	}
+
+	m_fSteve = static_cast<float>(fmod(m_fSteve, 360.0f));
+
+	vector3 v3Current = glm::lerp(v3Start, v3End, percentage);
+
+	m_m4Steve *= glm::translate(v3Current);
+
+	//m_m4Steve = glm::mat4(1.0f); // same as m_m4Steve = IDENTITY_M4; setting the identity to steve
 #pragma endregion
 #pragma region DOES NOT NEED CHANGES
 	//Set the model matrix
@@ -28,9 +58,11 @@ void AppClass::Update(void)
 	int nFPS = m_pSystem->GetFPS();
 	//Print info on the screen
 	m_pMeshMngr->PrintLine("\n" + m_pSystem->GetAppName(), REYELLOW);
-	m_pMeshMngr->Print("Seconds:");
+	m_pMeshMngr->Print("Seconds: ");
 	m_pMeshMngr->PrintLine(std::to_string(dTotalTime), RERED);
-	m_pMeshMngr->Print("FPS:");
-	m_pMeshMngr->Print(std::to_string(nFPS), RERED);
+	m_pMeshMngr->Print("FPS: ");
+	m_pMeshMngr->PrintLine(std::to_string(nFPS), RERED);
+	m_pMeshMngr->Print("Rotations: ");
+	m_pMeshMngr->PrintLine(std::to_string(rotations), RERED);
 #pragma endregion
 }
