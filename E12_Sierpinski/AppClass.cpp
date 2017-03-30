@@ -13,6 +13,15 @@ void AppClass::InitVariables(void)
 	m_pMesh = new MyMesh();
 	
 	//Creating the Mesh points
+	m_pMesh->AddVertexPosition(vector3(-0.5f, -0.5f, 0.0f));
+	m_pMesh->AddVertexColor(RERED);
+	m_pMesh->AddVertexPosition(vector3(0.5f, -0.5f, 0.0f));
+	m_pMesh->AddVertexColor(RERED);
+	m_pMesh->AddVertexPosition(vector3(-0.0f, 0.5f, 0.0f));
+	m_pMesh->AddVertexColor(RERED);
+
+	// Old red / blue box
+	/*
 	m_pMesh->AddVertexPosition(vector3(-1.0f, -1.0f, 0.0f));
 	m_pMesh->AddVertexColor(RERED);
 	m_pMesh->AddVertexPosition(vector3( 1.0f, -1.0f, 0.0f));
@@ -25,6 +34,7 @@ void AppClass::InitVariables(void)
 	m_pMesh->AddVertexColor(REBLUE);
 	m_pMesh->AddVertexPosition(vector3( 1.0f, 1.0f, 0.0f));
 	m_pMesh->AddVertexColor(REBLUE);
+	*/
 
 	//Compiling the mesh
 	m_pMesh->CompileOpenGL3X();
@@ -65,11 +75,15 @@ void AppClass::Display(void)
 	matrix4 m4Projection = m_pCameraMngr->GetProjectionMatrix();
 	matrix4 m4View = m_pCameraMngr->GetViewMatrix();
 
-	m_pMesh->Render(m4Projection, m4View, IDENTITY_M4);//Rendering nObject(s)											   //clear the screen
+	//m_pMesh->Render(m4Projection, m4View, IDENTITY_M4);//Rendering nObject(s)											   //clear the screen
 	
-	for (int i = 0; i < 250; i++) {
-		m_pMesh->Render(m4Projection, m4View, glm::translate(vector3(i, i, 0.0f)));
-	}
+	//for (int i = 0; i < 250; i++) {
+	//	m_pMesh->Render(m4Projection, m4View, glm::translate(vector3(i, i, 0.0f)));
+	//}
+
+	int n = 16;
+
+	Pascal(n, m4Projection, m4View);
 
 	m_pMeshMngr->Render(); //renders the render list
 	m_pMeshMngr->ClearRenderList(); //Reset the Render list after render
@@ -85,4 +99,21 @@ void AppClass::Release(void)
 		m_pMesh = nullptr;
 	}
 	super::Release();
+}
+
+void AppClass::Pascal(int n, matrix4 proj, matrix4 view)
+{
+	for (int line = 1; line <= n; line++)
+	{
+		int C = 1;  // used to represent C(line, i)
+		for (int i = 1; i <= line; i++)
+		{
+			//printf("%d ", C);  //The first value in a line is always 1
+			if (C % 2 != 0 || i == line) {
+				m_pMesh->Render(proj, view, glm::translate(vector3((-0.5 * line) + i, -line, 0.0f)));
+			}
+			C = C * (line - i) / i;
+		}
+		//printf("\n");
+	}
 }

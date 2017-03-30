@@ -93,6 +93,8 @@ public:
 	OUTPUT: ---
 	*/
 	virtual void WriteConfig(void) final {}
+
+	void Pascal(int n, matrix4 proj, matrix4 view);
 };
 
 #endif //__APPLICATION_H_
