@@ -1,22 +1,21 @@
 /*----------------------------------------------
 Programmer: Alberto Bobadilla (labigm@gmail.com)
-Date: 2015/09 (Last Modified on: 2017/03)
+Date: 2015/09 (Last Modified on: 15/11)
 ----------------------------------------------*/
 #ifndef __APPLICATION_H_
 #define __APPLICATION_H_
 
 #include "RE\ReEngAppClass.h"
 #include <SFML\Graphics.hpp>
+#include "Camera.h"
 
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 
 class AppClass : public ReEngAppClass
 {
-	matrix4 modelMatrix;
-	
-	float angle = 0.0f;
-	bool changeDir = false;
-
+private:
+	Camera m_cCamera;
+	PrimitiveClass* m_pCylinder = nullptr;
 public:
 	typedef ReEngAppClass super;
 
@@ -92,7 +91,6 @@ public:
 	OUTPUT: ---
 	*/
 	virtual void Release(void) final;
-
 };
 /*
 USAGE:
