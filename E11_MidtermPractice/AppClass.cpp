@@ -57,8 +57,14 @@ void AppClass::Update(void)
 	//Indicate the FPS
 	int nFPS = m_pSystem->GetFPS();
 	//Print info on the screen
+<<<<<<< HEAD
 	m_pMeshMngr->PrintLine("\n" + m_pSystem->GetAppName(), REYELLOW);
 	m_pMeshMngr->Print("Seconds: ");
+=======
+	m_pMeshMngr->PrintLine("");//Add a line on top
+	m_pMeshMngr->PrintLine(m_pSystem->GetAppName(), REYELLOW);
+	m_pMeshMngr->Print("Seconds:");
+>>>>>>> 3a599dd642348e48a93f58a5cdd8a50114af0a2c
 	m_pMeshMngr->PrintLine(std::to_string(dTotalTime), RERED);
 	m_pMeshMngr->Print("FPS: ");
 	m_pMeshMngr->PrintLine(std::to_string(nFPS), RERED);
