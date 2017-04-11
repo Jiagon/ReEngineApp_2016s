@@ -18,19 +18,23 @@ void AppClass::InitVariables(void)
 	m_selection = std::pair<int, int>(-1, -1);
 	//Set the camera position
 	
+	/*
 	m_pCameraMngr->SetPositionTargetAndView(
 		vector3(0.0f, 2.5f, 15.0f),//Camera position
 		vector3(0.0f, 2.5f, 0.0f),//What Im looking at
 		REAXISY);//What is up
-	
-	m_cCamera = Camera(vector3(0.0f, 2.5f, 15.0f), vector3(0.0f, 2.5f, 0.0f), REAXISY);
+	*/
+
+	vector2 vec = vector2(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
+
+	m_cCamera = Camera(vector3(0.0f, 2.5f, 15.0f), vector3(0.0f, 2.5f, 0.0f), REAXISY, vec);
 
 	m_pCylinder = new PrimitiveClass();
 	m_pCylinder->GenerateCylinder(1.0f, 1.0f, 10, REGREEN);
 
 
 	//Load a model onto the Mesh manager
-	m_pMeshMngr->LoadModel("Lego\\Unikitty.bto", "Unikitty");
+	//m_pMeshMngr->LoadModel("Lego\\Unikitty.bto", "Unikitty");
 }
 
 void AppClass::Update(void)
@@ -73,8 +77,9 @@ void AppClass::Display(void)
 {
 	//clear the screen
 	ClearScreen();
-
-	m_pCylinder->Render(m_cCamera.GetProjection(true), m_cCamera.GetView(), glm::translate(IDENTITY_M4, REAXISZ * -3.0f));
+	// Get the mouse position to give to the getView
+	vector2 vec = vector2(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
+	m_pCylinder->Render(m_cCamera.GetProjection(false), m_cCamera.GetView(vec), glm::translate(IDENTITY_M4, REAXISZ * -3.0f));
 
 	//Render the grid based on the camera's mode:
 	//m_pMeshMngr->AddGridToRenderListBasedOnCamera(m_pCameraMngr->GetCameraMode());

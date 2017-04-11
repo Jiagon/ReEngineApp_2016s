@@ -17,11 +17,14 @@ private:
 	bool m_bOrthographic;
 
 	float fov;
+	float pitch, yaw, roll;
+
+	vector2 prevMouse;
 
 public:
 	Camera();
-	Camera(vector3 target, vector3 position, vector3 up);
-	matrix4 GetView(void); //Gets the View Matrix
+	Camera(vector3 target, vector3 position, vector3 up, vector2 mousePos);
+	matrix4 GetView(vector2 vec); //Gets the View Matrix
 	matrix4 GetProjection(bool bOrthographic); //Gets the Projection Matrix (The bool lets you select between ortho and persp)
 	
 	void SetPosition(vector3 v3Position); //Sets the position of the camera
@@ -45,6 +48,6 @@ public:
 private:
 
 	// Helper functions - updates the matrices when vec3 variables have been changed
-	void UpdateViewMatrix();
+	void UpdateViewMatrix(vector2 vec);
 	void UpdateProjectionMatrix();
 };
