@@ -16,28 +16,25 @@ void AppClass::InitVariables(void)
 	m_pMeshMngr->LoadModel("Minecraft\\Steve.obj", "Steve");
 	m_pMeshMngr->LoadModel("Minecraft\\Cow.obj", "Cow");
 	//creating bounding spheres for both models
-	m_pBS0 = new MyBoundingSphereClass(m_pMeshMngr->GetVertexList("Zombie"));
-<<<<<<< HEAD
+	m_pBS0 = new MyBoundingBoxClass(m_pMeshMngr->GetVertexList("Zombie"));
 
-	matrix4 m4Translation = ;
+	matrix4 m4Translation = glm::translate(vector3(3.0, 0.0, 0.0));
 	m_pMeshMngr->LoadModel("Minecraft\\Steve.obj", "Steve");
-	m_pBS1 = new MyBoundingSphereClass(m_pMeshMngr->GetVertexList("Steve"));
+	m_pBS1 = new MyBoundingBoxClass(m_pMeshMngr->GetVertexList("Steve"));
 	m_pMeshMngr->SetModelMatrix(m4Translation, "Steve");
 
-	matrix4 m4Translation = ;
 	m_pMeshMngr->LoadModel("Minecraft\\Cow.obj", "Cow");
-	m_pBS2 = new MyBoundingSphereClass(m_pMeshMngr->GetVertexList("Cow"));
+	m_pBS2 = new MyBoundingBoxClass(m_pMeshMngr->GetVertexList("Cow"));
 	m_pMeshMngr->SetModelMatrix(m4Translation, "Cow");
-=======
-	m_pBS1 = new MyBoundingSphereClass(m_pMeshMngr->GetVertexList("Steve"));
-	m_pBS2 = new MyBoundingSphereClass(m_pMeshMngr->GetVertexList("Cow"));
+
+	m_pBS1 = new MyBoundingBoxClass(m_pMeshMngr->GetVertexList("Steve"));
+	m_pBS2 = new MyBoundingBoxClass(m_pMeshMngr->GetVertexList("Cow"));
 
 	matrix4 m4Position = glm::translate(vector3(3.0, 0.0, 0.0));
 	m_pMeshMngr->SetModelMatrix(m4Position, "Steve");
 
 	matrix4 m4Position2 = glm::translate(vector3(2.5, 2.0, 0.0));
 	m_pMeshMngr->SetModelMatrix(m4Position2, "Cow");
->>>>>>> 53d98d80ff1895dbe81dd532db734594399fa723
 }
 
 void AppClass::Update(void)
@@ -100,7 +97,6 @@ void AppClass::Update(void)
 		m_pBS2->SetColliding(true);
 	}
 
-<<<<<<< HEAD
 	m_pBS1->SetModelMatrix(m_pMeshMngr->GetModelMatrix("Steve"));
 	m_pBS1->RenderSphere();
 
@@ -108,30 +104,28 @@ void AppClass::Update(void)
 	m_pBS2->RenderSphere();
 
 
-	m_pBS0->m_bColliding = false;
-	m_pBS1->m_bColliding = false;
-	m_pBS2->m_bColliding = false;
+	m_pBS0->SetColliding(false);
+	m_pBS1->SetColliding(false);
+	m_pBS2->SetColliding(false);
 
 	if (m_pBS0->IsColliding(m_pBS1)) {
-		m_pBS0->m_bColliding = true;
-		m_pBS1->m_bColliding = true;
+		m_pBS0->SetColliding(true);
+		m_pBS1->SetColliding(true);
 	}
 	if (m_pBS0->IsColliding(m_pBS2)) {
-		m_pBS0->m_bColliding = true;
-		m_pBS2->m_bColliding = true;
+		m_pBS0->SetColliding(true);
+		m_pBS2->SetColliding(true);
 	}
 	if (m_pBS1->IsColliding(m_pBS2)) {
-		m_pBS1->m_bColliding = true;
-		m_pBS2->m_bColliding = true;
+		m_pBS1->SetColliding(true);
+		m_pBS2->SetColliding(true);
 	}
 
-=======
 	if (fPercentage > 1.0f)
 	{
 		fTimer = 0.0f;
 		std::swap(v3Start, v3End);
 	}
->>>>>>> 53d98d80ff1895dbe81dd532db734594399fa723
 
 	//Adds all loaded instance to the render list
 	m_pMeshMngr->AddSkyboxToRenderList();
@@ -175,14 +169,11 @@ void AppClass::Release(void)
 	SafeDelete(m_pBS0);
 	SafeDelete(m_pBS1);
 	SafeDelete(m_pBS2);
-<<<<<<< HEAD
 
 	if (m_pBS0 != nullptr)
 	{
 		delete m_pBS0;
 		m_pBS0 = nullptr;
 	}
-=======
->>>>>>> 53d98d80ff1895dbe81dd532db734594399fa723
 	super::Release(); //release the memory of the inherited fields
 }
