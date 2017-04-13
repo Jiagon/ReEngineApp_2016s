@@ -17,7 +17,10 @@ class AppClass : public ReEngAppClass
 	MyBoundingSphereClass* m_pBS0;
 	MyBoundingSphereClass* m_pBS1;
 	MyBoundingSphereClass* m_pBS2;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 53d98d80ff1895dbe81dd532db734594399fa723
 public:
 	typedef ReEngAppClass super;
 	/*
