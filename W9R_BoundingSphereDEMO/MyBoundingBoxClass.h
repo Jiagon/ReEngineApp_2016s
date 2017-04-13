@@ -9,7 +9,10 @@ private:
 	vector3 m_v3CenterGlobal = vector3(0.0f); //center of the sphere in global space
 	matrix4 m_m4ToWorld = IDENTITY_M4; //matrix that takes you from local to global space
 	MeshManagerSingleton* m_pMeshMngr = nullptr; //for drawing the sphere
+<<<<<<< HEAD
 	//bool m_bColliding;
+=======
+>>>>>>> 1916e612cfe8ad2068b2a3999ca9918819abc11a
 	bool m_bColliding = false;
 
 	vector3 m_v3Max;

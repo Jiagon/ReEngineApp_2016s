@@ -18,7 +18,10 @@ class AppClass : public ReEngAppClass
 	MyBoundingBoxClass* m_pBS0;
 	MyBoundingBoxClass* m_pBS1;
 	MyBoundingBoxClass* m_pBS2;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1916e612cfe8ad2068b2a3999ca9918819abc11a
 public:
 	typedef ReEngAppClass super;
 	/*

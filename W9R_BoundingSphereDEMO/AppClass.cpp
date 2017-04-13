@@ -17,6 +17,7 @@ void AppClass::InitVariables(void)
 	m_pMeshMngr->LoadModel("Minecraft\\Cow.obj", "Cow");
 	//creating bounding spheres for both models
 	m_pBS0 = new MyBoundingBoxClass(m_pMeshMngr->GetVertexList("Zombie"));
+<<<<<<< HEAD
 
 	matrix4 m4Translation = glm::translate(vector3(3.0, 0.0, 0.0));
 	m_pMeshMngr->LoadModel("Minecraft\\Steve.obj", "Steve");
@@ -27,6 +28,8 @@ void AppClass::InitVariables(void)
 	m_pBS2 = new MyBoundingBoxClass(m_pMeshMngr->GetVertexList("Cow"));
 	m_pMeshMngr->SetModelMatrix(m4Translation, "Cow");
 
+=======
+>>>>>>> 1916e612cfe8ad2068b2a3999ca9918819abc11a
 	m_pBS1 = new MyBoundingBoxClass(m_pMeshMngr->GetVertexList("Steve"));
 	m_pBS2 = new MyBoundingBoxClass(m_pMeshMngr->GetVertexList("Cow"));
 
