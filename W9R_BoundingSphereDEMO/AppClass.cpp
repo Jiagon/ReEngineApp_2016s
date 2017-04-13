@@ -14,6 +14,16 @@ void AppClass::InitVariables(void)
 	//Load a model onto the Mesh manager
 	m_pMeshMngr->LoadModel("Minecraft\\Zombie.obj", "Zombie");
 	m_pBS0 = new MyBoundingSphereClass(m_pMeshMngr->GetVertexList("Zombie"));
+
+	matrix4 m4Translation = ;
+	m_pMeshMngr->LoadModel("Minecraft\\Steve.obj", "Steve");
+	m_pBS1 = new MyBoundingSphereClass(m_pMeshMngr->GetVertexList("Steve"));
+	m_pMeshMngr->SetModelMatrix(m4Translation, "Steve");
+
+	matrix4 m4Translation = ;
+	m_pMeshMngr->LoadModel("Minecraft\\Cow.obj", "Cow");
+	m_pBS2 = new MyBoundingSphereClass(m_pMeshMngr->GetVertexList("Cow"));
+	m_pMeshMngr->SetModelMatrix(m4Translation, "Cow");
 }
 
 void AppClass::Update(void)
@@ -35,6 +45,30 @@ void AppClass::Update(void)
 	matrix4 m4Translate = glm::translate(m_v3Position);
 	m_pMeshMngr->SetModelMatrix(m4Translate, "Zombie"); //set the matrix to the model
 	m_pBS0->RenderSphere();//render the bounding sphere
+
+	m_pBS1->SetModelMatrix(m_pMeshMngr->GetModelMatrix("Steve"));
+	m_pBS1->RenderSphere();
+
+	m_pBS2->SetModelMatrix(m_pMeshMngr->GetModelMatrix("Cow"));
+	m_pBS2->RenderSphere();
+
+
+	m_pBS0->m_bColliding = false;
+	m_pBS1->m_bColliding = false;
+	m_pBS2->m_bColliding = false;
+
+	if (m_pBS0->IsColliding(m_pBS1)) {
+		m_pBS0->m_bColliding = true;
+		m_pBS1->m_bColliding = true;
+	}
+	if (m_pBS0->IsColliding(m_pBS2)) {
+		m_pBS0->m_bColliding = true;
+		m_pBS2->m_bColliding = true;
+	}
+	if (m_pBS1->IsColliding(m_pBS2)) {
+		m_pBS1->m_bColliding = true;
+		m_pBS2->m_bColliding = true;
+	}
 
 
 	//Adds all loaded instance to the render list
@@ -77,6 +111,8 @@ void AppClass::Display(void)
 void AppClass::Release(void)
 {
 	SafeDelete(m_pBS0);
+	SafeDelete(m_pBS1);
+	SafeDelete(m_pBS2);
 
 	if (m_pBS0 != nullptr)
 	{
