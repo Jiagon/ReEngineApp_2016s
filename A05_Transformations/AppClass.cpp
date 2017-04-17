@@ -65,7 +65,6 @@ void AppClass::Update(void)
 	m_m4Moon = glm::translate(m_m4Moon, vector3(2.0f, 0.0f, 0.0f));
 	m_m4Moon = glm::rotate(m_m4Moon, m_fMoonTimer * 20, vector3(0.0f, 1.0f, 0.0f));
 	m_m4Moon = glm::scale(m_m4Moon, vector3(2.0f, 2.0f, 2.0f));									// enlargens the moon (so I can actually see what I'm doing)
->>>>>>> 9ff2924db6bace96781b1232d4da9a7bcf5a0f72
 #pragma endregion
 
 #pragma region Print info

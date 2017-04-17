@@ -68,12 +68,14 @@ void MyBoundingBoxClass::RenderSphere()
 	if (true == m_bColliding)
 		v3Color = RERED;
 
+	// Personal cube
 	m_pMeshMngr->AddCubeToRenderList(
 		m_m4ToWorld *
 		glm::translate(m_v3CenterLocal) *
 		glm::scale(m_v3Size),
 		v3Color, WIRE);
 
+	// All-encompassing cube
 	m_pMeshMngr->AddCubeToRenderList(
 		m_m4ToWorld *
 		glm::translate(m_v3CenterLocal) *
@@ -95,7 +97,7 @@ void MyBoundingBoxClass::SetModelMatrix(matrix4 a_m4ToWorld)
 	//for (int i = 0; i < 8; i++)
 	{
 		// ----------------------------------->>HERE
-		if (m_v3MinG.x < m_v3MaxG.x) {
+		if (m_v3MinG.x > m_v3MaxG.x) {
 			m_v3MaxLargest.x = m_v3MaxG.x;
 			m_v3MinLargest.x = m_v3MinG.x;
 		}
@@ -104,7 +106,7 @@ void MyBoundingBoxClass::SetModelMatrix(matrix4 a_m4ToWorld)
 			m_v3MinLargest.x = m_v3MaxG.x;
 		}
 
-		if (m_v3MinG.y < m_v3MaxG.y) {
+		if (m_v3MinG.y > m_v3MaxG.y) {
 			m_v3MaxLargest.y = m_v3MaxG.y;
 			m_v3MinLargest.y = m_v3MinG.y;
 		}
@@ -113,7 +115,7 @@ void MyBoundingBoxClass::SetModelMatrix(matrix4 a_m4ToWorld)
 			m_v3MinLargest.y = m_v3MaxG.y;
 		}
 
-		if (m_v3MinG.z < m_v3MaxG.z) {
+		if (m_v3MinG.z > m_v3MaxG.z) {
 			m_v3MaxLargest.z = m_v3MaxG.z;
 			m_v3MinLargest.z = m_v3MinG.z;
 		}
