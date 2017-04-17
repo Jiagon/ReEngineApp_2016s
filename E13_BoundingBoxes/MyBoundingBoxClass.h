@@ -69,7 +69,7 @@ public:
 	/*
 	Renders the sphere based on the radius and the center in global space
 	*/
-	void RenderSphere();
+	void RenderSphere(vector3 pos);
 	/*
 	Sets the transform from the local to world matrix
 	*/
